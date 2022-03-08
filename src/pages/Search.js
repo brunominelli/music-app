@@ -18,6 +18,7 @@ class Search extends Component {
 
   handleAPI = async (search) => {
     const result = await searchAlbumsAPI(search);
+    console.log(result);
     this.setState({
       loading: false,
       search: '',

@@ -32,6 +32,7 @@ class Header extends Component {
           ? <Loading />
           : (
             <div>
+              <h1>Trybetunes</h1>
               <p data-testid="header-user-name">{ user }</p>
               <nav>
                 <Link data-testid="link-to-search" to="/search">Buscar</Link>

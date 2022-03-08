@@ -27,29 +27,26 @@ class App extends React.Component {
   render() {
     const { setSearch, redirect } = this.state;
     return (
-      <>
-        <p>Trybetunes</p>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/profile/edit" component={ ProfileEdit } />
-            <Route path="/profile" component={ Profile } />
-            <Route path="/album/:id" component={ Album } />
-            <Route path="/favorites" component={ Favorites } />
-            <Route exact path="/search">
-              {setSearch
-                ? <Search />
-                : <Loading />}
-            </Route>
-            <Route exact path="/">
-              {redirect
-                ? <Redirect to="/search" />
-                : (
-                  <Login />)}
-            </Route>
-            <Route path="*" component={ NotFound } />
-          </Switch>
-        </BrowserRouter>
-      </>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route path="/profile" component={ Profile } />
+          <Route path="/album/:id" component={ Album } />
+          <Route path="/favorites" component={ Favorites } />
+          <Route exact path="/search">
+            {setSearch
+              ? <Search />
+              : <Loading />}
+          </Route>
+          <Route exact path="/">
+            {redirect
+              ? <Redirect to="/search" />
+              : (
+                <Login />)}
+          </Route>
+          <Route path="*" component={ NotFound } />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
