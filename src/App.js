@@ -8,53 +8,24 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import Search from './pages/Search';
-import { createUser } from './services/userAPI';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isDisabled: true,
       setSearch: true,
-      setRedirect: false,
-      user: '',
+      redirect: false,
     };
   }
 
   handleSearch = async () => {
-    const { user } = this.state;
-    await createUser({ name: user });
     this.setState({
-      user: '',
       setSearch: true,
     });
   }
 
-  handleLoginButton = (event) => {
-    event.preventDefault();
-    this.setState({
-      setSearch: false,
-      setRedirect: true,
-    }, this.handleSearch);
-  }
-
-  handleLogin = ({ target: { value } }) => {
-    const min = 3;
-    if (value.length >= min) {
-      this.setState({
-        isDisabled: false,
-        user: value,
-      });
-    } else {
-      this.setState({
-        isDisabled: true,
-        user: value,
-      });
-    }
-  }
-
   render() {
-    const { isDisabled, setSearch, setRedirect, user } = this.state;
+    const { setSearch, redirect } = this.state;
     return (
       <>
         <p>Trybetunes</p>
@@ -70,15 +41,10 @@ class App extends React.Component {
                 : <Loading />}
             </Route>
             <Route exact path="/">
-              {setRedirect
+              {redirect
                 ? <Redirect to="/search" />
                 : (
-                  <Login
-                    isDisabled={ isDisabled }
-                    handleLogin={ this.handleLogin }
-                    handleLoginButton={ this.handleLoginButton }
-                    user={ user }
-                  />)}
+                  <Login />)}
             </Route>
             <Route path="*" component={ NotFound } />
           </Switch>

@@ -1,36 +1,69 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { createUser } from '../services/userAPI';
+import Loading from '../components/Loading';
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: false,
+      redirect: false,
+      user: '',
+      isDisabled: true,
+    };
+  }
+
+  handleInput = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, this.setState({
+      isDisabled: value.length <= 2,
+    }));
+  }
+
+  handleButton = (event) => {
+    event.preventDefault();
+    const { value } = event.target;
+    createUser({ name: value });
+    this.setState({
+      loading: true,
+      redirect: true,
+    });
+  }
+
   render() {
-    const { isDisabled, handleLogin, handleLoginButton } = this.props;
+    const { loading, redirect, user, isDisabled } = this.state;
     return (
       <div data-testid="page-login">
-        <form>
-          <input
-            type="text"
-            placeholder="Nome"
-            data-testid="login-name-input"
-            onChange={ handleLogin }
-          />
-          <button
-            type="submit"
-            data-testid="login-submit-button"
-            disabled={ isDisabled }
-            onClick={ handleLoginButton }
-          >
-            Entrar
-          </button>
-        </form>
+        {loading
+          ? <Loading />
+          : (
+            <form>
+              <input
+                type="text"
+                placeholder="Nome"
+                data-testid="login-name-input"
+                name="user"
+                value={ user }
+                onChange={ this.handleInput }
+              />
+              <button
+                type="submit"
+                data-testid="login-submit-button"
+                disabled={ isDisabled }
+                value={ user }
+                onClick={ this.handleButton }
+              >
+                Entrar
+              </button>
+            </form>
+          )}
+        { redirect ? <Redirect to="/search" /> : null }
       </div>
     );
   }
 }
-
-Login.propTypes = {
-  isDisabled: PropTypes.bool.isRequired,
-  handleLogin: PropTypes.func.isRequired,
-  handleLoginButton: PropTypes.func.isRequired,
-};
 
 export default Login;
