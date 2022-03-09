@@ -20,7 +20,6 @@ class Album extends Component {
     const request = await getMusics(id);
     const songList = request.filter((song) => song.kind === 'song');
     const album = request[0];
-    console.log(songList);
     this.setState({
       songList,
       loading: false,
