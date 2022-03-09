@@ -29,7 +29,7 @@ class MusicCard extends Component {
       loading: true,
       check: checked,
     }, async () => {
-      if (check) {
+      if (!check) {
         await addSong(track);
       } else {
         await removeSong(track);
