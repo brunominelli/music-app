@@ -20,8 +20,6 @@ class MusicCard extends Component {
     });
   }
 
-  // componentDidUpdate(prevState, nextState) {}
-
   handleChange = async (event, track) => {
     const { check } = this.state;
     const checked = event.target;

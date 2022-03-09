@@ -9,7 +9,7 @@ class Album extends Component {
   constructor() {
     super();
     this.state = {
-      songList: [],
+      trackList: [],
       loading: true,
       album: {},
     };
@@ -18,17 +18,17 @@ class Album extends Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const request = await getMusics(id);
-    const songList = request.filter((song) => song.kind === 'song');
+    const trackList = request.filter((song) => song.kind === 'song');
     const album = request[0];
     this.setState({
-      songList,
+      trackList,
       loading: false,
       album,
     });
   }
 
   render() {
-    const { songList, loading, album } = this.state;
+    const { trackList, loading, album } = this.state;
     return (
       <>
         <Header />
@@ -44,7 +44,7 @@ class Album extends Component {
                 />
                 <h2 data-testid="album-name">{album.collectionName}</h2>
                 <h3 data-testid="artist-name">{album.artistName}</h3>
-                {songList.map((track) => (
+                {trackList.map((track) => (
                   <MusicCard track={ track } key={ track.trackId } />
                 ))}
               </section>
