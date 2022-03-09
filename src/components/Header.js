@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import { getUser } from '../services/userAPI';
+import images from '../data/images';
 
 class Header extends Component {
   constructor() {
@@ -27,19 +28,43 @@ class Header extends Component {
   render() {
     const { user, loading } = this.state;
     return (
-      <header data-testid="header-component">
+      <header data-testid="header-component" className="header">
         {loading
           ? <Loading />
           : (
-            <div>
-              <h1>Trybetunes</h1>
-              <p data-testid="header-user-name">{ user }</p>
-              <nav>
-                <Link data-testid="link-to-search" to="/search">Buscar</Link>
-                <Link data-testid="link-to-favorites" to="/favorites">Favoritas</Link>
-                <Link data-testid="link-to-profile" to="/profile">Perfil</Link>
-              </nav>
-            </div>
+            <>
+              <div className="header-row">
+                <img
+                  src={ images.trybetunesLogoWhite.src }
+                  alt={ images.trybetunesLogoWhite.alt }
+                  className="header-logo"
+                />
+                <p data-testid="header-user-name" className="header-user">{ user }</p>
+              </div>
+              <div className="header-row header-row-white">
+                <Link
+                  data-testid="link-to-search"
+                  to="/search"
+                  className="button button-grey-green"
+                >
+                  Buscar
+                </Link>
+                <Link
+                  data-testid="link-to-favorites"
+                  to="/favorites"
+                  className="button button-grey-green"
+                >
+                  Favoritas
+                </Link>
+                <Link
+                  data-testid="link-to-profile"
+                  to="/profile"
+                  className="button button-grey-green"
+                >
+                  Perfil
+                </Link>
+              </div>
+            </>
           )}
       </header>
     );

@@ -22,6 +22,13 @@ class Favorites extends Component {
     });
   }
 
+  async handleFavorites() {
+    const newFavorites = await getFavoriteSongs();
+    this.setState({
+      favorites: newFavorites,
+    });
+  }
+
   render() {
     const { favorites, loading } = this.state;
     return (

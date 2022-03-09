@@ -50,7 +50,6 @@ class Search extends Component {
       <>
         <Header />
         <div data-testid="page-search">
-          <h1>Search</h1>
           {
             loading
               ? <Loading />
@@ -84,26 +83,27 @@ class Search extends Component {
                           { currentSearch }
                         </h2>
                         <section>
-                          {
-                            searchResult.map((result, index) => (
-                              <Link
-                                key={ index }
-                                data-testid={ `link-to-album-${result.collectionId}` }
-                                to={ `/album/${result.collectionId}` }
-                              >
-                                <figure>
-                                  <img
-                                    src={ result.artworkUrl100 }
-                                    alt={ result.collectionName }
-                                  />
-                                  <figcaption>
-                                    { result.collectionName }
-                                  </figcaption>
-                                </figure>
-                              </Link>
-                            ))
-                          }
-                          )
+                          <div>
+                            {
+                              searchResult.map((result, index) => (
+                                <Link
+                                  key={ index }
+                                  data-testid={ `link-to-album-${result.collectionId}` }
+                                  to={ `/album/${result.collectionId}` }
+                                >
+                                  <figure>
+                                    <img
+                                      src={ result.artworkUrl100 }
+                                      alt={ result.collectionName }
+                                    />
+                                    <figcaption>
+                                      { result.collectionName }
+                                    </figcaption>
+                                  </figure>
+                                </Link>
+                              ))
+                            }
+                          </div>
                         </section>
                       </article>
                     )}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from '../components/Loading';
+import images from '../data/images';
 
 class Login extends Component {
   constructor() {
@@ -36,29 +37,41 @@ class Login extends Component {
   render() {
     const { loading, redirect, user, isDisabled } = this.state;
     return (
-      <div data-testid="page-login">
+      <div data-testid="page-login" className="flex-container">
         {loading
           ? <Loading />
           : (
-            <form>
-              <input
-                type="text"
-                placeholder="Nome"
-                data-testid="login-name-input"
-                name="user"
-                value={ user }
-                onChange={ this.handleInput }
-              />
-              <button
-                type="submit"
-                data-testid="login-submit-button"
-                disabled={ isDisabled }
-                value={ user }
-                onClick={ this.handleButton }
-              >
-                Entrar
-              </button>
-            </form>
+            <>
+              <figure className="flex-container-block">
+                <img
+                  src={ images.trybetunesLogo.src }
+                  alt={ images.trybetunesLogo.alt }
+                />
+              </figure>
+              <form className="flex-container-block">
+                <div className="form-login">
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    className="form-input"
+                    data-testid="login-name-input"
+                    name="user"
+                    value={ user }
+                    onChange={ this.handleInput }
+                  />
+                  <button
+                    type="submit"
+                    className="button button-blue"
+                    data-testid="login-submit-button"
+                    disabled={ isDisabled }
+                    value={ user }
+                    onClick={ this.handleButton }
+                  >
+                    Entrar
+                  </button>
+                </div>
+              </form>
+            </>
           )}
         { redirect ? <Redirect to="/search" /> : null }
       </div>

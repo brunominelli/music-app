@@ -8,16 +8,20 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
+      loading: false,
       user: {},
     };
   }
 
   async componentDidMount() {
-    const user = await getUser();
     this.setState({
-      user,
-      loading: false,
+      loading: true,
+    }, async () => {
+      const user = await getUser();
+      this.setState({
+        user,
+        loading: false,
+      });
     });
   }
 
