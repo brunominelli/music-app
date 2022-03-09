@@ -11,27 +11,25 @@ class Album extends Component {
     this.state = {
       songList: [],
       loading: true,
+      album: {},
     };
   }
 
   async componentDidMount() {
-    const { match } = this.props;
-    const { id } = match.params;
-    const songList = await getMusics(id);
+    const { match: { params: { id } } } = this.props;
+    const request = await getMusics(id);
+    const songList = request.filter((song) => song.kind === 'song');
+    const album = request[0];
+    console.log(songList);
     this.setState({
       songList,
       loading: false,
+      album,
     });
   }
 
-  handleSongList = async () => {
-    const id = 'id523924661';
-    const songList = await getMusics(id);
-    console.log(songList);
-  };
-
   render() {
-    const { songList, loading } = this.state;
+    const { songList, loading, album } = this.state;
     return (
       <>
         <Header />
@@ -41,15 +39,14 @@ class Album extends Component {
             ? <Loading />
             : (
               <section>
-                {console.log(songList)}
                 <img
-                  src={ songList[0].artworkUrl100 }
-                  alt={ songList[0].collectionName }
+                  src={ album.artworkUrl100 }
+                  alt={ album.collectionName }
                 />
-                <h2 data-testid="album-name">{songList[0].collectionName}</h2>
-                <h3 data-testid="artist-name">{songList[0].artistName}</h3>
-                {songList.map((track, index) => (
-                  index > 0 && <MusicCard track={ track } key={ index } />
+                <h2 data-testid="album-name">{album.collectionName}</h2>
+                <h3 data-testid="artist-name">{album.artistName}</h3>
+                {songList.map((track) => (
+                  <MusicCard track={ track } key={ track.trackId } />
                 ))}
               </section>
             )}
