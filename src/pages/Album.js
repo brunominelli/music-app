@@ -45,7 +45,10 @@ class Album extends Component {
                 <h2 data-testid="album-name">{album.collectionName}</h2>
                 <h3 data-testid="artist-name">{album.artistName}</h3>
                 {trackList.map((track) => (
-                  <MusicCard track={ track } key={ track.trackId } />
+                  <MusicCard
+                    key={ track.trackId }
+                    track={ track }
+                  />
                 ))}
               </section>
             )}

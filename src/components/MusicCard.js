@@ -7,7 +7,7 @@ class MusicCard extends Component {
   constructor() {
     super();
     this.state = {
-      check: false,
+      checked: false,
       loading: false,
     };
   }
@@ -16,40 +16,39 @@ class MusicCard extends Component {
     const { track } = this.props;
     const favorites = await getFavoriteSongs();
     this.setState({
-      check: favorites.some((song) => song.trackId === track.trackId),
+      checked: favorites.some((favorite) => favorite.trackId === track.trackId),
     });
   }
 
-  handleChange = async (event, track) => {
-    const { check } = this.state;
-    const checked = event.target;
+  handleChange = (event, track) => {
+    const { onInputChange } = this.props;
+    const { checked } = event.target;
     this.setState({
       loading: true,
-      check: checked,
+      checked: false,
     }, async () => {
-      if (!check) {
+      if (checked) {
         await addSong(track);
       } else {
         await removeSong(track);
       }
       this.setState({
-        check: !(check),
         loading: false,
-      });
+        checked,
+      }, onInputChange);
     });
   }
 
   render() {
     const { track } = this.props;
-    const { trackName, trackId, previewUrl } = track;
-    const { loading, check } = this.state;
+    const { loading, checked } = this.state;
     return (
       <div>
         {loading ? <Loading />
           : (
             <div>
-              <h4>{trackName}</h4>
-              <audio data-testid="audio-component" src={ previewUrl } controls>
+              <h4>{track.trackName}</h4>
+              <audio data-testid="audio-component" src={ track.previewUrl } controls>
                 <track kind="captions" />
                 O seu navegador não suporta o elemento
                 {' '}
@@ -57,15 +56,15 @@ class MusicCard extends Component {
                 .
               </audio>
               <div>
-                <label htmlFor={ `favorite-${trackId}` }>
+                <label htmlFor={ `favorite-${track.trackId}` }>
                   Favorita
                   {' '}
                   <input
                     type="checkbox"
-                    id={ `favorite-${trackId}` }
-                    data-testid={ `checkbox-music-${trackId}` }
+                    id={ `favorite-${track.trackId}` }
+                    data-testid={ `checkbox-music-${track.trackId}` }
+                    checked={ checked }
                     onChange={ (event) => this.handleChange(event, track) }
-                    checked={ check }
                   />
                 </label>
               </div>
@@ -78,6 +77,7 @@ class MusicCard extends Component {
 
 MusicCard.propTypes = {
   track: PropTypes.objectOf(PropTypes.any).isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };
 
 export default MusicCard;

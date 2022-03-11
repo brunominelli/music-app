@@ -55,13 +55,14 @@ class Search extends Component {
               ? <Loading />
               : (
                 <>
-                  <form>
+                  <form className="flex-container-row">
                     <input
                       type="text"
                       placeholder="Buscar..."
                       data-testid="search-artist-input"
                       value={ search }
                       onChange={ this.handleInput }
+                      className="form-input"
                     />
                     <button
                       type="submit"
@@ -69,6 +70,7 @@ class Search extends Component {
                       disabled={ isDisabled }
                       value={ search }
                       onClick={ this.handleSearchButton }
+                      className="button button-blue-search"
                     >
                       Pesquisar
                     </button>
@@ -82,28 +84,27 @@ class Search extends Component {
                           {' '}
                           { currentSearch }
                         </h2>
-                        <section>
-                          <div>
-                            {
-                              searchResult.map((result, index) => (
-                                <Link
-                                  key={ index }
-                                  data-testid={ `link-to-album-${result.collectionId}` }
-                                  to={ `/album/${result.collectionId}` }
-                                >
-                                  <figure>
-                                    <img
-                                      src={ result.artworkUrl100 }
-                                      alt={ result.collectionName }
-                                    />
-                                    <figcaption>
-                                      { result.collectionName }
-                                    </figcaption>
-                                  </figure>
-                                </Link>
-                              ))
-                            }
-                          </div>
+                        <section className="album-container">
+                          {
+                            searchResult.map((result, index) => (
+                              <Link
+                                key={ index }
+                                data-testid={ `link-to-album-${result.collectionId}` }
+                                to={ `/album/${result.collectionId}` }
+                              >
+                                <figure className="album">
+                                  <img
+                                    src={ result.artworkUrl100 }
+                                    alt={ result.collectionName }
+                                    className="album-image"
+                                  />
+                                  <figcaption>
+                                    { result.collectionName }
+                                  </figcaption>
+                                </figure>
+                              </Link>
+                            ))
+                          }
                         </section>
                       </article>
                     )}

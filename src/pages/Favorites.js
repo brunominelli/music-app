@@ -14,18 +14,19 @@ class Favorites extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ loading: true });
-    const favorites = await getFavoriteSongs();
-    this.setState({
-      favorites,
-      loading: false,
-    });
+    this.onInputChange();
   }
 
-  async handleFavorites() {
-    const newFavorites = await getFavoriteSongs();
+  onInputChange = () => {
     this.setState({
-      favorites: newFavorites,
+      loading: true,
+    }, async () => {
+      const favorites = await getFavoriteSongs();
+      const newFavorites = favorites.map((favorite) => favorite);
+      this.setState({
+        loading: false,
+        favorites: newFavorites,
+      });
     });
   }
 
@@ -40,10 +41,11 @@ class Favorites extends Component {
             ? <Loading />
             : (
               <section>
-                {favorites.map((track) => (
+                {favorites.map((track, index) => (
                   <MusicCard
+                    key={ index }
                     track={ track }
-                    key={ track.trackId }
+                    onInputChange={ this.onInputChange }
                   />
                 ))}
               </section>
