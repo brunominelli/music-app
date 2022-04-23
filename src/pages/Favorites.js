@@ -35,20 +35,27 @@ class Favorites extends Component {
     return (
       <>
         <Header />
-        <div data-testid="page-favorites">
-          <h1>Favorites</h1>
+        <div data-testid="page-favorites" className="flex-container">
           {loading
             ? <Loading />
             : (
-              <section>
-                {favorites.map((track, index) => (
-                  <MusicCard
-                    key={ index }
-                    track={ track }
-                    onInputChange={ this.onInputChange }
-                  />
-                ))}
-              </section>
+              <>
+                <div className="flex-container row">
+                  <p className="track-block title-search">Música</p>
+                  <p className="track-block title-search">Artista</p>
+                  <p className="track-block title-search">Prévia</p>
+                  <p className="track-block title-search">Favorita</p>
+                </div>
+                <section className="flex-container">
+                  {favorites.map((track, index) => (
+                    <MusicCard
+                      key={ index }
+                      track={ track }
+                      onInputChange={ this.onInputChange }
+                    />
+                  ))}
+                </section>
+              </>
             )}
         </div>
       </>

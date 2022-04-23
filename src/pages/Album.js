@@ -33,23 +33,43 @@ class Album extends Component {
       <>
         <Header />
         <div data-testid="page-album">
-          <h1>Album</h1>
           {loading
             ? <Loading />
             : (
-              <section>
-                <img
-                  src={ album.artworkUrl100 }
-                  alt={ album.collectionName }
-                />
-                <h2 data-testid="album-name">{album.collectionName}</h2>
-                <h3 data-testid="artist-name">{album.artistName}</h3>
-                {trackList.map((track) => (
-                  <MusicCard
-                    key={ track.trackId }
-                    track={ track }
-                  />
-                ))}
+              <section className="flex-container col">
+                <div className="album-card">
+                  <figure className="album-image">
+                    <img
+                      src={ album.artworkUrl100 }
+                      alt={ album.collectionName }
+                      className="album-image"
+                    />
+                    <figcaption className="album-legend">
+                      <p
+                        data-testid="album-name"
+                        className="album-title"
+                      >
+                        {album.collectionName}
+                      </p>
+                      <p
+                        data-testid="artist-name"
+                        className="album-artist"
+                      >
+                        {album.artistName}
+                      </p>
+                    </figcaption>
+                  </figure>
+                </div>
+                <div className="flex-container block">
+                  {
+                    trackList.map((track) => (
+                      <MusicCard
+                        key={ track.trackId }
+                        track={ track }
+                      />
+                    ))
+                  }
+                </div>
               </section>
             )}
         </div>

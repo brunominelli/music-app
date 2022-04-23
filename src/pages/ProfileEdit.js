@@ -73,12 +73,11 @@ class ProfileEdit extends Component {
     return (
       <>
         <Header />
-        <div data-testid="page-profile-edit">
-          <h1>Profile Edit</h1>
+        <div data-testid="page-profile-edit" className="flex-container">
           {loading
             ? <Loading />
             : (
-              <form>
+              <form className="flex-container form">
                 <input
                   type="text"
                   placeholder="Nome"
@@ -86,6 +85,7 @@ class ProfileEdit extends Component {
                   name="name"
                   value={ name }
                   onChange={ this.handleInput }
+                  className="block form-input"
                 />
                 <input
                   type="email"
@@ -94,6 +94,7 @@ class ProfileEdit extends Component {
                   name="email"
                   value={ email }
                   onChange={ this.handleInput }
+                  className="block form-input"
                 />
                 <input
                   type="text"
@@ -102,19 +103,23 @@ class ProfileEdit extends Component {
                   name="description"
                   value={ description }
                   onChange={ this.handleInput }
+                  className="block form-input"
                 />
                 <input
                   type="text"
+                  placeholder="Foto"
                   data-testid="edit-input-image"
                   name="image"
                   value={ image }
                   onChange={ this.handleInput }
+                  className="block form-input"
                 />
                 <button
                   type="button"
                   data-testid="edit-button-save"
                   disabled={ isDisabled }
                   onClick={ this.setProfile }
+                  className="block button button-blue"
                 >
                   Editar perfil
                 </button>

@@ -30,21 +30,37 @@ class Profile extends Component {
     return (
       <>
         <Header />
-        <div data-testid="page-profile">
-          <h1>Profile</h1>
+        <div data-testid="page-profile" className="flex-container">
           {loading
             ? <Loading />
             : (
-              <section>
-                <img
-                  src={ image }
-                  data-testid="profile-image"
-                  alt={ `Imagem de ${name}` }
-                />
-                <p>{name}</p>
-                <p>{email}</p>
-                <p>{description}</p>
-                <Link to="/profile/edit">Editar perfil</Link>
+              <section className="profile">
+                <div className="row">
+                  <img
+                    src={ image }
+                    data-testid="profile-image"
+                    alt={ `Imagem de ${name}` }
+                    className="profile-image"
+                  />
+                  <Link
+                    to="/profile/edit"
+                    className="block button button-blue"
+                  >
+                    Editar perfil
+                  </Link>
+                </div>
+                <div className="profile-block">
+                  <strong className="content-title-auto">Nome</strong>
+                  <p className="content-text-auto">{name}</p>
+                </div>
+                <div className="profile-block">
+                  <strong className="content-title-auto">Email</strong>
+                  <p className="content-text-auto">{email}</p>
+                </div>
+                <div className="profile-block">
+                  <strong className="content-title-auto">Descrição</strong>
+                  <p className="content-text-auto">{description}</p>
+                </div>
               </section>
             )}
         </div>

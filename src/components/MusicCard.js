@@ -43,34 +43,38 @@ class MusicCard extends Component {
     const { track } = this.props;
     const { loading, checked } = this.state;
     return (
-      <div>
+      <section div className="col">
         {loading ? <Loading />
           : (
-            <div>
-              <h4>{track.trackName}</h4>
-              <audio data-testid="audio-component" src={ track.previewUrl } controls>
+            <div className="track-row">
+              <p className="track-block">{track.trackName}</p>
+              <p className="track-block">{track.artistName}</p>
+              <audio
+                data-testid="audio-component"
+                src={ track.previewUrl }
+                className="track-block"
+                controls
+              >
                 <track kind="captions" />
                 O seu navegador não suporta o elemento
                 {' '}
                 <code>audio</code>
                 .
               </audio>
-              <div>
-                <label htmlFor={ `favorite-${track.trackId}` }>
-                  Favorita
-                  {' '}
-                  <input
-                    type="checkbox"
-                    id={ `favorite-${track.trackId}` }
-                    data-testid={ `checkbox-music-${track.trackId}` }
-                    checked={ checked }
-                    onChange={ (event) => this.handleChange(event, track) }
-                  />
-                </label>
-              </div>
+              <label htmlFor={ `favorite-${track.trackId}` } className="track-block">
+                Favorita
+                {' '}
+                <input
+                  type="checkbox"
+                  id={ `favorite-${track.trackId}` }
+                  data-testid={ `checkbox-music-${track.trackId}` }
+                  checked={ checked }
+                  onChange={ (event) => this.handleChange(event, track) }
+                />
+              </label>
             </div>
           )}
-      </div>
+      </section>
     );
   }
 }

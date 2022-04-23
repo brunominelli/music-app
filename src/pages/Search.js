@@ -49,13 +49,13 @@ class Search extends Component {
     return (
       <>
         <Header />
-        <div data-testid="page-search">
+        <div data-testid="page-search" className="container-search">
           {
             loading
               ? <Loading />
               : (
                 <>
-                  <form className="flex-container-row">
+                  <form className="container-search row">
                     <input
                       type="text"
                       placeholder="Buscar..."
@@ -70,36 +70,43 @@ class Search extends Component {
                       disabled={ isDisabled }
                       value={ search }
                       onClick={ this.handleSearchButton }
-                      className="button button-blue-search"
+                      className="button button-search"
                     >
                       Pesquisar
                     </button>
                   </form>
                   {!searchResult.length
-                    ? <p>Nenhum álbum foi encontrado</p>
+                    ? <h2 className="title-search">Nenhum álbum foi encontrado</h2>
                     : (
-                      <article>
-                        <h2>
-                          Resultado de álbuns de:
+                      <article className="container-search">
+                        <h2 className="title-search">
+                          Resultado de álbuns de
                           {' '}
                           { currentSearch }
+                          :
                         </h2>
-                        <section className="album-container">
+                        <section className="container-search-result">
                           {
                             searchResult.map((result, index) => (
                               <Link
                                 key={ index }
                                 data-testid={ `link-to-album-${result.collectionId}` }
                                 to={ `/album/${result.collectionId}` }
+                                className="link"
                               >
-                                <figure className="album">
+                                <figure className="album-card">
                                   <img
                                     src={ result.artworkUrl100 }
                                     alt={ result.collectionName }
                                     className="album-image"
                                   />
-                                  <figcaption>
-                                    { result.collectionName }
+                                  <figcaption className="album-legend">
+                                    <p
+                                      className="album-title"
+                                    >
+                                      { result.collectionName }
+                                    </p>
+                                    <p className="album-artist">{ result.artistName }</p>
                                   </figcaption>
                                 </figure>
                               </Link>

@@ -37,41 +37,40 @@ class Login extends Component {
   render() {
     const { loading, redirect, user, isDisabled } = this.state;
     return (
-      <div data-testid="page-login" className="flex-container">
+      <div data-testid="page-login" className="container">
         {loading
           ? <Loading />
           : (
-            <>
-              <figure className="flex-container-block">
+            <section className="flex-container col">
+              <figure className="block">
                 <img
                   src={ images.trybetunesLogo.src }
                   alt={ images.trybetunesLogo.alt }
+                  className="image"
                 />
               </figure>
-              <form className="flex-container-block">
-                <div className="form-login">
-                  <input
-                    type="text"
-                    placeholder="Nome"
-                    className="form-input"
-                    data-testid="login-name-input"
-                    name="user"
-                    value={ user }
-                    onChange={ this.handleInput }
-                  />
-                  <button
-                    type="submit"
-                    className="button button-blue"
-                    data-testid="login-submit-button"
-                    disabled={ isDisabled }
-                    value={ user }
-                    onClick={ this.handleButton }
-                  >
-                    Entrar
-                  </button>
-                </div>
+              <form className="form-login">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  data-testid="login-name-input"
+                  name="user"
+                  value={ user }
+                  onChange={ this.handleInput }
+                  className="block input-login"
+                />
+                <button
+                  type="submit"
+                  data-testid="login-submit-button"
+                  disabled={ isDisabled }
+                  value={ user }
+                  onClick={ this.handleButton }
+                  className="block button button-blue"
+                >
+                  Entrar
+                </button>
               </form>
-            </>
+            </section>
           )}
         { redirect ? <Redirect to="/search" /> : null }
       </div>

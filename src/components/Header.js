@@ -9,6 +9,7 @@ class Header extends Component {
     super();
     this.state = {
       user: '',
+      image: '',
       loading: false,
     };
   }
@@ -17,55 +18,71 @@ class Header extends Component {
     this.setState({
       loading: true,
     }, async () => {
-      const { name } = await getUser();
+      const { name, image } = await getUser();
       this.setState({
         user: name,
+        image,
         loading: false,
       });
     });
   }
 
   render() {
-    const { user, loading } = this.state;
+    const { user, image, loading } = this.state;
     return (
       <header data-testid="header-component" className="header">
-        {loading
-          ? <Loading />
-          : (
-            <>
-              <div className="header-row">
-                <img
-                  src={ images.trybetunesLogoWhite.src }
-                  alt={ images.trybetunesLogoWhite.alt }
-                  className="header-logo"
-                />
-                <p data-testid="header-user-name" className="header-user">{ user }</p>
+        {
+          loading
+            ? <Loading />
+            : (
+              <div className="header col">
+                <div className="header">
+                  <img
+                    src={ images.trybetunesLogoWhite.src }
+                    alt={ images.trybetunesLogoWhite.alt }
+                    className="image-logo"
+                  />
+                  <div data-testid="icon-user" className="icon-user">
+                    <img
+                      src={ image }
+                      alt={ `Foto de ${user}` }
+                      className="icon-profile-image"
+                    />
+                    <p>{user}</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <Link
+                    data-testid="link-to-search"
+                    to="/search"
+                  />
+                  <div className="row">
+                    <Link
+                      data-testid="link-to-search"
+                      to="/search"
+                      className="button button-grey"
+                    >
+                      Buscar
+                    </Link>
+                    <Link
+                      data-testid="link-to-favorites"
+                      to="/favorites"
+                      className="button button-grey"
+                    >
+                      Favoritas
+                    </Link>
+                    <Link
+                      data-testid="link-to-profile"
+                      to="/profile"
+                      className="button button-grey"
+                    >
+                      Perfil
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="header-row header-row-white">
-                <Link
-                  data-testid="link-to-search"
-                  to="/search"
-                  className="button button-grey-green"
-                >
-                  Buscar
-                </Link>
-                <Link
-                  data-testid="link-to-favorites"
-                  to="/favorites"
-                  className="button button-grey-green"
-                >
-                  Favoritas
-                </Link>
-                <Link
-                  data-testid="link-to-profile"
-                  to="/profile"
-                  className="button button-grey-green"
-                >
-                  Perfil
-                </Link>
-              </div>
-            </>
-          )}
+            )
+        }
       </header>
     );
   }
